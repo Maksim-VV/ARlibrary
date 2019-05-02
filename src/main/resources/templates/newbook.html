@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new book</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .books, .books td {
+            border: 1px solid lightgray;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<h2>Добавить книгу</h2>
+<br>
+
+<table class="books">
+
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Автор</th>
+        <th>Жанр</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <form action="#" th:action="@{/add}" method="post">
+
+            <td>
+                <input id="bookName" class="form-control" type="text" name="bookName" required placeholder="Название книги">
+            </td>
+
+            <td>
+                <input id="authors" class="form-control" type="text" name="authors" required placeholder="Автор">
+            </td>
+
+            <td>
+                <input id="genres" class="form-control" type="text" name="genres" required placeholder="Жанр">
+            </td>
+
+            <td>
+                <button type="submit">Добавить книгу</button>
+            </td>
+
+        </form>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
