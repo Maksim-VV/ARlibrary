@@ -63,16 +63,20 @@ public class BookServiceImpl implements BookService {
             author = authorRep.save(authorNew);
         }
         book.setAuthor(author);
-        if(isBookExists && bookRep.getBookByName(bookName)!=null)
-        {
-           return "";
+        if (isBookExists && bookRep.getBookByName(bookName) != null) {
+            return "";
         }
 
-        if (bookRep.save(book) == null) {
-            return String.format(MSG_DONT_ADD_BOOK, bookName);
-        }
-        return String.format(MSG_ADD_NEW_BOOK, bookName);
+        return addNewBook(book);
     }
+
+    public String addNewBook(Book book) {
+        if (bookRep.save(book) == null) {
+            return String.format(MSG_DONT_ADD_BOOK, book.getBookName());
+        }
+        return String.format(MSG_ADD_NEW_BOOK, book.getBookName());
+    }
+
 
     @Override
     @Transactional

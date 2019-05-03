@@ -17,55 +17,55 @@ import static org.mockito.Mockito.verify;
 public class BookServiceImpTest {
 
     @MockBean
-      private BookRep bookRep;
+    private BookRep bookRep;
 
-      @Autowired
-      BookServiceImpl bookServiceImpl;
+    @Autowired
+    BookServiceImpl bookServiceImpl;
 
-      private final String TEST_BOOK_NAME = "Айвенго";
-      private final String TEST_AUTHOR = "В.Скотт";
-      private final String TEST_GENRE = "Роман";
-      private final String TEST_COMMENT = "Книга супер!";
+    private final String TEST_BOOK_NAME = "Айвенго";
+    private final String TEST_AUTHOR = "В.Скотт";
+    private final String TEST_GENRE = "Роман";
+    private final String TEST_COMMENT = "Книга супер!";
 
-      @Test
-      public void addNewBook() {
-          assertTrue(bookServiceImpl.addNewBook(TEST_BOOK_NAME, TEST_AUTHOR, TEST_GENRE).contains(TEST_BOOK_NAME));
-      }
+    @Test
+    public void addNewBook() {
+        assertTrue(bookServiceImpl.addNewBook(TEST_BOOK_NAME, TEST_AUTHOR, TEST_GENRE).contains(TEST_BOOK_NAME));
+    }
 
-      @Test
-      public void bookByGenre() {
-          bookServiceImpl.bookByGenre(TEST_GENRE);
-          verify(bookRep).getBookByGenre(TEST_GENRE);
-      }
+    @Test
+    public void bookByGenre() {
+        bookServiceImpl.bookByGenre(TEST_GENRE);
+        verify(bookRep).getBookByGenre(TEST_GENRE);
+    }
 
-      @Test
-      public void bookByName() {
-          bookServiceImpl.bookByName(TEST_BOOK_NAME);
-          verify(bookRep).getBookByName(TEST_BOOK_NAME);
-      }
+    @Test
+    public void bookByName() {
+        bookServiceImpl.bookByName(TEST_BOOK_NAME);
+        verify(bookRep).getBookByName(TEST_BOOK_NAME);
+    }
 
-      @Test
-      public void bookByAuthor() {
-          bookServiceImpl.bookByAuthor(TEST_AUTHOR);
-          verify(bookRep).getBookByAuthor(TEST_AUTHOR);
-      }
+    @Test
+    public void bookByAuthor() {
+        bookServiceImpl.bookByAuthor(TEST_AUTHOR);
+        verify(bookRep).getBookByAuthor(TEST_AUTHOR);
+    }
 
-      @Test
-      public void showAllBooks() {
-          bookServiceImpl.showAllBooks();
-          verify(bookRep).findAll();
-      }
+    @Test
+    public void showAllBooks() {
+        bookServiceImpl.showAllBooks();
+        verify(bookRep).findAll();
+    }
 
-      @Test
-      public void addComment() {
-          bookServiceImpl.addComment(TEST_COMMENT, TEST_BOOK_NAME);
-          verify(bookRep).getBookByName(TEST_BOOK_NAME);
-      }
+    @Test
+    public void addComment() {
+        bookServiceImpl.addComment(TEST_COMMENT, TEST_BOOK_NAME);
+        verify(bookRep).getBookByName(TEST_BOOK_NAME);
+    }
 
-      @Test
-      public void getCommentByBook() {
-          bookServiceImpl.getCommentsByBook(TEST_BOOK_NAME);
-          verify(bookRep).getBookByName(TEST_BOOK_NAME);
-      }
+    @Test
+    public void getCommentByBook() {
+        bookServiceImpl.getCommentsByBook(TEST_BOOK_NAME);
+        verify(bookRep).getBookByName(TEST_BOOK_NAME);
+    }
 
 }

@@ -2,12 +2,8 @@ body {
     padding: 50px;
 }
 
-input:read-only {
-    
-    background: lightgray;
-}
-
 table.books-list {
+    min-width: 540px;
     font-size: 12pt;
     border: 2px;
     border-collapse: collapse;
@@ -34,5 +30,14 @@ thead > tr > td {
     border: 1px solid maroon;
     height: 25px;
 }
+
+.form-control-td {
+    width: 40%;
+}
+
+.form-control {
+    width: 270%;
+}
+
 
 

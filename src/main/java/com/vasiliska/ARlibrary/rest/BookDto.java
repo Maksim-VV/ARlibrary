@@ -16,6 +16,8 @@ public class BookDto {
     private String authorName;
     private String genreName;
 
+    public BookDto() {
+        }
 
     public BookDto(long id, String bookName, Author author, Genre genre) {
         this.bookId = id;
