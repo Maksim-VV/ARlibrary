@@ -24,6 +24,9 @@ public interface BookRep extends CrudRepository<Book, Long> {
     @Query("SELECT b FROM Book b WHERE b.bookName =:name")
     Book getBookByName(@Param(value = "name") String name);
 
+    @Query("SELECT b FROM Book b WHERE b.bookId =:bookId")
+    Book getBookByBookId(@Param(value = "bookId") Long bookId);
+
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("UPDATE Book b SET b.bookName = :bookName WHERE b.id = :bookId")
     int updateBookNameById(@Param(value = "bookId") Long id, @Param(value = "bookName") String newBookName);

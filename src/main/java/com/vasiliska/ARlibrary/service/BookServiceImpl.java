@@ -44,8 +44,10 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public String addNewBook(String bookName, String authorName, String genreName) {
+        boolean isBookExists = true;
         Genre genre = genreRep.getGenreByName(genreName);
         if (genre == null) {
+            isBookExists = false;
             Genre genreNew = new Genre(genreName);
             genre = genreRep.save(genreNew);
         }
@@ -56,10 +58,16 @@ public class BookServiceImpl implements BookService {
 
         Author author = authorRep.getAuthorByName(authorName);
         if (author == null) {
+            isBookExists = false;
             Author authorNew = new Author(authorName);
             author = authorRep.save(authorNew);
         }
         book.setAuthor(author);
+        if(isBookExists && bookRep.getBookByName(bookName)!=null)
+        {
+           return "";
+        }
+
         if (bookRep.save(book) == null) {
             return String.format(MSG_DONT_ADD_BOOK, bookName);
         }
@@ -140,6 +148,11 @@ public class BookServiceImpl implements BookService {
             return MSG_DONT_FIND;
         }
         return showComments(commentRep.getCommentByBook(book.getBookId()));
+    }
+
+    @Override
+    public String getBookByBookId(Long bookId) {
+        return bookRep.getBookByBookId(bookId).getBookName();
     }
 
     private String showBooks(List<Book> listBooks) {

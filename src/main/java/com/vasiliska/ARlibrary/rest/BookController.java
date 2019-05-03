@@ -1,6 +1,5 @@
 package com.vasiliska.ARlibrary.rest;
 
-import com.vasiliska.ARlibrary.domain.Book;
 import com.vasiliska.ARlibrary.service.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,60 +24,26 @@ public class BookController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/books/{bookName}")
-    public BookDto getById(@PathVariable("bookName") String bookName) {
-        return BookDto.toDto(bookService.bookByName(bookName));
+    @GetMapping("/books/{bookId}")
+    public BookDto getById(@PathVariable("bookId") Long bookId) {
+        return BookDto.toDto(bookService.bookByName(bookService.getBookByBookId(bookId)));
     }
 
-    @DeleteMapping("/books/{bookName}")
-    public void deleteById(
-            @PathVariable("bookName") String bookName) {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-        bookService.delBook(bookName);
+    @DeleteMapping("/books/{bookId}")
+    public void deleteById(@PathVariable("bookId") Long bookId) {
+        bookService.delBook(bookService.getBookByBookId(bookId));
     }
 
     @PostMapping("/books")
     public void save(@RequestBody BookDto bookDto) {
-
-        System.out.println(bookDto.getBookName());
-        System.out.println(bookDto.getAuthorName());
-        System.out.println(bookDto.getAuthorName());
-
-        bookService.addNewBook(bookDto.getBookName(), bookDto.getAuthorName(), bookDto.getAuthorName());
+        bookService.addNewBook(bookDto.getBookName(), bookDto.getAuthorName(), bookDto.getGenreName());
     }
 
-    @PutMapping("/books/{id}")
-    public void update(@PathVariable("bookId") Long bookId, @RequestBody Book book) {
-        bookService.updateBookNameById(bookId, book.getBookName());
+    @PutMapping("/books/{bookId}")
+    public void update(@PathVariable("bookId") Long bookId, @RequestBody BookDto bookDto) {
+
+
+        bookService.updateBookNameById(bookId, bookDto.getBookName());
     }
 
-
-//    @PostMapping("/update")
-//    public String updatePage(@RequestParam(name = "bookName") String bookName,
-//                             @RequestParam(name = "bookId") Long bookId,
-//                             Model model) {
-//        bookService.updateBookNameById(bookId, bookName);
-//        return "redirect:/";
-//    }
-//
-//    @PostMapping("/add")
-//    public String add(@RequestParam(name = "bookName") String bookName,
-//                      @RequestParam(name = "authors") String authors,
-//                      @RequestParam(name = "genres") String genres,
-//                      Model model) {
-//        bookService.addNewBook(bookName, authors, genres);
-//        return "redirect:/";
-//    }
-//
-//    @GetMapping("/add")
-//    public String add(Book book) {
-//        return "newbook";
-//    }
-//
-//    @PostMapping("/delete/{bookName}")
-//    public String delete(@PathVariable("bookName") String bookName, Model model) {
-//        bookService.delBook(bookName);
-//        return "redirect:/";
-//    }
 }

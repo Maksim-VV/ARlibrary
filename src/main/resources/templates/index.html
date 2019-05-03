@@ -6,16 +6,15 @@
     <link rel="stylesheet" type="text/css" href="../static/css/styles.css" th:href="@{css/styles.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
     <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
-
 </head>
 
 <body>
-<h2>Библиотека</h2>
+<script src="js/books_list.js"></script>
+    <h2>Библиотека</h2>
 <br>
 
 
 <table class="books-list">
-
     <thead>
     <tr>
         <th>ID</th>
@@ -34,121 +33,29 @@
 
 <table id="saveForm">
     <tr>
-        <td>Ид</td>
+        <td>ID</td>
         <td><input type="text" id="bookId" readonly="readonly"></td>
     </tr>
     <tr>
         <td>Название</td>
-        <td><input type="text" id="bookName"></td>
+        <td><input id="bookName" class="form-control" type="text" name="bookName"
+                   placeholder="Название книги"></td>
     </tr>
     <tr>
         <td>Автор</td>
-        <td><input type="text" id="authorName"></td>
+        <td><input id="authorName" class="form-control" type="text" name="authorName"
+                   placeholder="Автор"></td>
     </tr>
     <tr>
         <td>Жанр</td>
-        <td><input type="text" id="genreName"></td>
+        <td><input id="genreName" class="form-control" type="text" name="genreName"
+                   placeholder="Жанр"></td>
     </tr>
     <tr>
-        <td><input type="button" value="Сохранить" id="btnAddBook"></td>
+        <td></td>
+        <td><input type="submit" value="Сохранить" id="btnAddBook"></td>
     </tr>
 </table>
-
-
-<!--<form th:action="@{/add}" th:href="newbook.html">-->
-<!--<button type="submit">Добавить книгу</button>-->
-<!--</form>-->
-
-
-<script>
-    $(document).ready(function () {
-        listAllBooks();
-        var book = {};
-        var url = "";
-        var method = "";
-        $('#btnAddBook').click(function () {
-            book.bookId = $('#bookId').val();
-            book.bookName = $('#bookName').val();
-            book.authorName = $('#authorName').val();
-            book.genreName = $('#genreName').val();
-            var bookObj = JSON.stringify(book);
-            if (book.bookId) {
-                url = "/books/" + book.bookId;
-                method = 'PUT';
-            } else {
-                url = "/books";
-                method = 'POST'
-            }
-            $.ajax({
-                url: url,
-                method: method,
-                data: bookObj,
-                contentType: 'application/json; charset=utf-8',
-                success: function () {
-                    listAllBooks();
-                    reset();
-                },
-                error: function (error) {
-                    alert(error);
-                }
-            })
-        });
-    });
-
-    function listAllBooks() {
-        $.get('/books').done(function (books) {
-            $('#booksTableBody').empty();
-            books.forEach(function (book) {
-                $('#booksTableBody').append(`
-                    <tr>
-                        <td>${book.bookId}</td>
-                        <td>${book.bookName}</td>
-                        <td>${book.author.authorName}</td>
-                        <td>${book.genre.genreName}</td>
-                        <td><button onclick="updateBook(${book.bookName})">Изменить</button></td>
-                        <td><button onclick="deleteBook(${book.bookName})">Удалить</button></td>
-                    </tr>
-                `)
-            });
-        })
-    }
-
-    function deleteBook(bookName) {
-        alert("Привет");
-        $.ajax({
-            url: '/books/' + bookName,
-            method: 'DELETE',
-            success: function () {
-                listAllBooks();
-            },
-            error: function (error) {
-                alert(error);
-            }
-        })
-    }
-
-    function updateBook(bookName) {
-        $.ajax({
-            url: '/books/' + bookName,
-            method: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                $('#bookId').val(data.bookId);
-                $('#bookName').val(data.bookName);
-            },
-            error: function (error) {
-                alert(error);
-            }
-        })
-    }
-
-    function reset() {
-        $('#bookId').val('');
-        $('#bookName').val('');
-        $('#authorName').val('');
-        $('#genreName').val('');
-    }
-</script>
 
 </body>
 </html>
