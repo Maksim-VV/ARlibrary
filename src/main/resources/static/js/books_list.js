@@ -11,10 +11,10 @@
         var bookObj = JSON.stringify(book);
         if (validateForm(book.authorName) || validateForm(book.bookName) || validateForm(book.genreName)) {
             if (book.bookId) {
-                url = "/books/" + book.bookId;
+                url = "/api/v1/books/" + book.bookId;
                 method = 'PUT';
             } else {
-                url = "/books";
+                url = "/api/v1/books";
                 method = 'POST'
             }
             $.ajax({
@@ -42,16 +42,17 @@
 function validateForm(s) {
     s = s.replace(/^\s+|\s+$/g, '')
     if (!s) {
-        return false;
+        return false;                loc
     }
 
     return true;
 }
 
 function listAllBooks() {
-    $.get('/books').done(function (books) {
+    $.get('/api/v1/books').done(function (books) {
         $('#booksTableBody').empty();
         books.forEach(function (book) {
+            // noinspection JSAnnotator
             $('#booksTableBody').append(`
                     <tr>
                         <td>${book.bookId}</td>
@@ -68,7 +69,7 @@ function listAllBooks() {
 
 function deleteBook(bookId) {
     $.ajax({
-        url: '/books/' + bookId,
+        url: '/api/v1/books/' + bookId,
         method: 'DELETE',
         success: function () {
             listAllBooks();
@@ -81,7 +82,7 @@ function deleteBook(bookId) {
 
 function updateBook(bookId) {
     $.ajax({
-        url: '/books/' + bookId,
+        url: '/api/v1/books/' + bookId,
         method: 'GET',
         dataType: 'json',
         success: function (data) {

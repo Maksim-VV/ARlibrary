@@ -47,18 +47,12 @@ public class BookControllerTest {
         createTestBook();
     }
 
-    @Test
-    public void showAllBooks() throws Exception {
-        when(bookService.showAllBooks()).thenReturn(Collections.singletonList(testBook));
-        mvc.perform(get("/")).andExpect(status().isOk())
-                .andExpect(view().name(PAGE));
-    }
 
     @Test
     public void addNewBook() throws Exception {
         BookDto bookDto = new BookDto(1L, TEST_BOOK_NAME, null, null);
         ObjectMapper objectMapper = new ObjectMapper();
-        mvc.perform(post("/books")
+        mvc.perform(post("/api/v1/books")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(testBook)))
                 .andExpect(status().isOk());
@@ -68,15 +62,14 @@ public class BookControllerTest {
 
     @Test
     public void getBookById() throws Exception {
-        when(bookService.showAllBooks()).thenReturn(Collections.singletonList(testBook));
-        mvc.perform(get("/books/" + "?id=1")).andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].bookId", is(1)))
-                .andExpect(jsonPath("$[0].bookName", is(TEST_BOOK_NAME)));
+       when(bookService.bookByName(bookService.getBookByBookId(1L))).thenReturn(testBook);
+        mvc.perform(get("/api/v1/books/" + "?id=1")).andExpect(status().isOk());
+        verify(bookService, times(1)).getBookByBookId(1L);
     }
 
     @Test
     public void deleteById() throws Exception {
-        this.mvc.perform(delete("/books/1"))
+        this.mvc.perform(delete("/api/v1/books/1"))
                 .andExpect(status().isOk());
         verify(bookService, times(1))
                 .delBook(bookService.getBookByBookId(1L));
