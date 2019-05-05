@@ -20,4 +20,6 @@ public interface BookService {
     String addComment(String commentText, String bookName);
     String getCommentsByBook(String bookName);
 
+    String getBookByBookId(Long bookId);
+
 }
