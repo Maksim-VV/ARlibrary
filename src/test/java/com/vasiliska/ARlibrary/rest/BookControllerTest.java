@@ -14,13 +14,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Collections;
-
-import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @RunWith(SpringRunner.class)
@@ -40,7 +37,6 @@ public class BookControllerTest {
     private final String TEST_BOOK_NAME = "Му-му";
     private final String TEST_AUTHOR = "Тургенев";
     private final String TEST_GENRE = "Драма";
-    static final String PAGE = "index";
 
     @Before
     public void setUp() throws Exception {
@@ -63,9 +59,10 @@ public class BookControllerTest {
     @Test
     public void getBookById() throws Exception {
        when(bookService.bookByName(bookService.getBookByBookId(1L))).thenReturn(testBook);
-        mvc.perform(get("/api/v1/books/" + "?id=1")).andExpect(status().isOk());
-        verify(bookService, times(1)).getBookByBookId(1L);
+        mvc.perform(get("/api/v1/books/1")).andExpect(status().isOk());
+        verify(bookService, times(2)).getBookByBookId(1L);
     }
+
 
     @Test
     public void deleteById() throws Exception {
