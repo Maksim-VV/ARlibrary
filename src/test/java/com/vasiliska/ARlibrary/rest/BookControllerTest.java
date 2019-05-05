@@ -58,9 +58,10 @@ public class BookControllerTest {
 
     @Test
     public void getBookById() throws Exception {
-       when(bookService.bookByName(bookService.getBookByBookId(1L))).thenReturn(testBook);
+        when(bookService.getBookByBookId(1L)).thenReturn(TEST_BOOK_NAME);
+        when(bookService.bookByName(TEST_BOOK_NAME)).thenReturn(testBook);
         mvc.perform(get("/api/v1/books/1")).andExpect(status().isOk());
-        verify(bookService, times(2)).getBookByBookId(1L);
+        verify(bookService, times(1)).getBookByBookId(1L);
     }
 
 
